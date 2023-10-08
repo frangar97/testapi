@@ -8,7 +8,8 @@ type Handlers struct {
 }
 
 type requestResponse struct {
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
+	Data    any    `json:"data,omitempty"`
 }
 
 func NewHandlers(services service.Service, secret string) Handlers {

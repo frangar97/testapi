@@ -52,6 +52,12 @@ func migrateModels(db *gorm.DB) error {
 }
 
 func registerRoutes(mux *echo.Echo, handlers handlers.Handlers) {
+	//user routes
 	mux.POST("/api/user", handlers.CreateUserHandler)
 	mux.POST("/api/user/login", handlers.LoginUserHandler)
+
+	//device routes
+	mux.POST("/api/devices", handlers.CreateDeviceHandler)
+	mux.GET("/api/devices", handlers.GetAllDevicesHandler)
+	mux.GET("/api/devices/:id", handlers.GetDeviceByIdHandler)
 }

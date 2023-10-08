@@ -11,7 +11,7 @@ import (
 type DeviceService interface {
 	CreateDevice(string) (entities.Device, error)
 	GetDeviceById(string) (entities.Device, error)
-	GetAllDevices(string) ([]entities.Device, error)
+	GetAllDevices() ([]entities.Device, error)
 }
 
 type deviceServiceImpl struct {
@@ -45,6 +45,6 @@ func (d deviceServiceImpl) GetDeviceById(id string) (entities.Device, error) {
 	return device, nil
 }
 
-func (d deviceServiceImpl) GetAllDevices(id string) ([]entities.Device, error) {
+func (d deviceServiceImpl) GetAllDevices() ([]entities.Device, error) {
 	return d.deviceRepository.GetAllDevices()
 }
