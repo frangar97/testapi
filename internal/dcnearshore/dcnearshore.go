@@ -28,12 +28,7 @@ func Run() {
 	}
 
 	repositories := repository.NewRepository(db)
-	services := service.NewService(repositories)
-
-	err = services.UserService.CreateUser("fgarcia", "123456789")
-	if err != nil {
-		log.Fatal(err)
-	}
+	_ = service.NewService(repositories, cfg.Secret)
 
 }
 

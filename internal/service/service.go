@@ -6,8 +6,8 @@ type Service struct {
 	UserService UserService
 }
 
-func NewService(repositories repository.Repository) Service {
+func NewService(repositories repository.Repository, secret string) Service {
 	return Service{
-		UserService: userServiceImpl{userRepository: repositories.UserRepository},
+		UserService: userServiceImpl{userRepository: repositories.UserRepository, secret: secret},
 	}
 }
