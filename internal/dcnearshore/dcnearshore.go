@@ -5,6 +5,7 @@ import (
 
 	"github.com/frangar97/testapi/internal/config"
 	"github.com/frangar97/testapi/internal/entities"
+	"github.com/frangar97/testapi/internal/repository"
 	"github.com/frangar97/testapi/pkg/database"
 	"gorm.io/gorm"
 )
@@ -24,6 +25,9 @@ func Run() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	_ = repository.NewRepository(db)
+
 }
 
 func migrateModels(db *gorm.DB) error {
