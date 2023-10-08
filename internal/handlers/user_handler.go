@@ -14,6 +14,11 @@ func (h Handlers) CreateUserHandler(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, requestResponse{Message: "user and password are required"})
 	}
 
+	errores := userModel.ValidateUser()
+	if len(errores) != 0 {
+		return c.JSON(http.StatusBadRequest, requestResponse{Data: errores})
+	}
+
 	err = h.services.UserService.CreateUser(userModel.User, userModel.Password)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, requestResponse{Message: err.Error()})
@@ -27,6 +32,11 @@ func (h Handlers) LoginUserHandler(c echo.Context) error {
 	err := c.Bind(&userModel)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, requestResponse{Message: err.Error()})
+	}
+
+	errores := userModel.ValidateUser()
+	if len(errores) != 0 {
+		return c.JSON(http.StatusBadRequest, requestResponse{Data: errores})
 	}
 
 	token, err := h.services.UserService.LoginUser(userModel.User, userModel.Password)

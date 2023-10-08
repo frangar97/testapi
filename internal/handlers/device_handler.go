@@ -14,6 +14,11 @@ func (h Handlers) CreateDeviceHandler(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, requestResponse{Message: err.Error()})
 	}
 
+	errores := deviceModel.ValidateDevice()
+	if len(errores) == 0 {
+		return c.JSON(http.StatusBadRequest, requestResponse{Data: errores})
+	}
+
 	device, err := h.services.DeviceService.CreateDevice(deviceModel.Name)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, requestResponse{Message: err.Error()})
