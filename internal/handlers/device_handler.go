@@ -15,7 +15,7 @@ func (h Handlers) CreateDeviceHandler(c echo.Context) error {
 	}
 
 	errores := deviceModel.ValidateDevice()
-	if len(errores) == 0 {
+	if len(errores) != 0 {
 		return c.JSON(http.StatusBadRequest, requestResponse{Data: errores})
 	}
 
@@ -44,4 +44,35 @@ func (h Handlers) GetDeviceByIdHandler(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusCreated, requestResponse{Data: device})
+}
+
+func (h Handlers) DeleteDeviceByIdHandler(c echo.Context) error {
+	deviceId := c.Param("id")
+	err := h.services.DeviceService.DeleteDevice(deviceId)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, requestResponse{Message: err.Error()})
+	}
+
+	return c.JSON(http.StatusCreated, requestResponse{Message: "device deleted successfully"})
+}
+
+func (h Handlers) UpdateDeviceHandler(c echo.Context) error {
+	deviceModel := models.DeviceModel{}
+	err := c.Bind(&deviceModel)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, requestResponse{Message: err.Error()})
+	}
+
+	errores := deviceModel.ValidateDevice()
+	if len(errores) != 0 {
+		return c.JSON(http.StatusBadRequest, requestResponse{Data: errores})
+	}
+
+	deviceId := c.Param("id")
+	err = h.services.DeviceService.UpdateDevice(deviceId, deviceModel.Name)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, requestResponse{Message: err.Error()})
+	}
+
+	return c.JSON(http.StatusCreated, requestResponse{Message: "device updated successfully"})
 }

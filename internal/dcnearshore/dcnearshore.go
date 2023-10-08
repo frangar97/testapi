@@ -61,4 +61,6 @@ func registerRoutes(mux *echo.Echo, handlers handlers.Handlers) {
 	protected.POST("devices", handlers.CreateDeviceHandler)
 	protected.GET("devices", handlers.GetAllDevicesHandler)
 	protected.GET("devices/:id", handlers.GetDeviceByIdHandler)
+	protected.PUT("devices/:id", handlers.UpdateDeviceHandler)
+	protected.DELETE("devices/:id", handlers.DeleteDeviceByIdHandler)
 }
