@@ -9,7 +9,7 @@ import (
 
 type UserRepository interface {
 	CreateUser(*entities.User) error
-	GetUserByUsername(string) (entities.User, error)
+	GetUserByUsername(string) (*entities.User, error)
 }
 
 type userRepositoryImpl struct {
@@ -30,12 +30,12 @@ func (u userRepositoryImpl) CreateUser(user *entities.User) error {
 	return nil
 }
 
-func (u userRepositoryImpl) GetUserByUsername(username string) (entities.User, error) {
-	user := entities.User{}
+func (u userRepositoryImpl) GetUserByUsername(username string) (*entities.User, error) {
+	user := &entities.User{}
 
-	result := u.db.First(&user, "user=?", username)
+	result := u.db.First(user, "user_name=?", username)
 	if result.Error != nil {
-		return user, result.Error
+		return nil, result.Error
 	}
 
 	return user, nil

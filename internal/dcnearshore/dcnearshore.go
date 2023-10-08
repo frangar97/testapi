@@ -6,6 +6,7 @@ import (
 	"github.com/frangar97/testapi/internal/config"
 	"github.com/frangar97/testapi/internal/entities"
 	"github.com/frangar97/testapi/internal/repository"
+	"github.com/frangar97/testapi/internal/service"
 	"github.com/frangar97/testapi/pkg/database"
 	"gorm.io/gorm"
 )
@@ -26,7 +27,13 @@ func Run() {
 		log.Fatal(err)
 	}
 
-	_ = repository.NewRepository(db)
+	repositories := repository.NewRepository(db)
+	services := service.NewService(repositories)
+
+	err = services.UserService.CreateUser("fgarcia", "123456789")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 }
 
