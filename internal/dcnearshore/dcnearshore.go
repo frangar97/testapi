@@ -1,13 +1,16 @@
 package dcnearshore
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/frangar97/testapi/internal/config"
 	"github.com/frangar97/testapi/internal/entities"
+	"github.com/frangar97/testapi/internal/handlers"
 	"github.com/frangar97/testapi/internal/repository"
 	"github.com/frangar97/testapi/internal/service"
 	"github.com/frangar97/testapi/pkg/database"
+	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )
 
@@ -28,8 +31,14 @@ func Run() {
 	}
 
 	repositories := repository.NewRepository(db)
-	_ = service.NewService(repositories, cfg.Secret)
+	services := service.NewService(repositories, cfg.Secret)
+	handlers := handlers.NewHandlers(services, cfg.Secret)
 
+	mux := echo.New()
+
+	registerRoutes(mux, handlers)
+
+	mux.Start(fmt.Sprintf(":%s", cfg.Port))
 }
 
 func migrateModels(db *gorm.DB) error {
@@ -40,4 +49,9 @@ func migrateModels(db *gorm.DB) error {
 	}
 
 	return nil
+}
+
+func registerRoutes(mux *echo.Echo, handlers handlers.Handlers) {
+	mux.POST("/api/user", handlers.CreateUserHandler)
+	mux.POST("/api/user/login", handlers.LoginUserHandler)
 }
