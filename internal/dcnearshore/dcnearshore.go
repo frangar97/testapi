@@ -56,8 +56,9 @@ func registerRoutes(mux *echo.Echo, handlers handlers.Handlers) {
 	mux.POST("/api/user", handlers.CreateUserHandler)
 	mux.POST("/api/user/login", handlers.LoginUserHandler)
 
+	protected := mux.Group("/api/", handlers.ValidateUser)
 	//device routes
-	mux.POST("/api/devices", handlers.CreateDeviceHandler)
-	mux.GET("/api/devices", handlers.GetAllDevicesHandler)
-	mux.GET("/api/devices/:id", handlers.GetDeviceByIdHandler)
+	protected.POST("devices", handlers.CreateDeviceHandler)
+	protected.GET("devices", handlers.GetAllDevicesHandler)
+	protected.GET("devices/:id", handlers.GetDeviceByIdHandler)
 }
