@@ -57,10 +57,18 @@ func registerRoutes(mux *echo.Echo, handlers handlers.Handlers) {
 	mux.POST("/api/user/login", handlers.LoginUserHandler)
 
 	protected := mux.Group("/api/", handlers.ValidateUser)
+
 	//device routes
 	protected.POST("devices", handlers.CreateDeviceHandler)
 	protected.GET("devices", handlers.GetAllDevicesHandler)
 	protected.GET("devices/:id", handlers.GetDeviceByIdHandler)
 	protected.PUT("devices/:id", handlers.UpdateDeviceHandler)
 	protected.DELETE("devices/:id", handlers.DeleteDeviceByIdHandler)
+
+	//firmware routes
+	protected.POST("firmwares", handlers.CreateFirmwareHandler)
+	protected.GET("firmwares", handlers.GetAllFirmwareHandler)
+	protected.GET("firmwares/:id", handlers.GetFirmwareByIdHandler)
+	protected.PUT("firmwares/:id", handlers.UpdateFirmwareHandler)
+	protected.DELETE("firmwares/:id", handlers.DeleteFirmwareByIdHandler)
 }
