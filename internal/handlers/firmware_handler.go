@@ -48,7 +48,7 @@ func (h Handlers) GetFirmwareByIdHandler(c echo.Context) error {
 
 func (h Handlers) DeleteFirmwareByIdHandler(c echo.Context) error {
 	firmwareId := c.Param("id")
-	err := h.services.DeviceService.DeleteDevice(firmwareId)
+	err := h.services.FirmwareService.DeleteFirmware(firmwareId)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, requestResponse{Message: err.Error()})
 	}
