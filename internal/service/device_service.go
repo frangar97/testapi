@@ -17,7 +17,6 @@ type DeviceService interface {
 }
 
 type deviceServiceImpl struct {
-	secret           string
 	deviceRepository repository.DeviceRepository
 }
 

@@ -33,7 +33,7 @@ func (h Handlers) GetAllDevicesHandler(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, requestResponse{Message: err.Error()})
 	}
 
-	return c.JSON(http.StatusCreated, requestResponse{Data: devices})
+	return c.JSON(http.StatusOK, requestResponse{Data: devices})
 }
 
 func (h Handlers) GetDeviceByIdHandler(c echo.Context) error {
@@ -43,7 +43,7 @@ func (h Handlers) GetDeviceByIdHandler(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, requestResponse{Message: err.Error()})
 	}
 
-	return c.JSON(http.StatusCreated, requestResponse{Data: device})
+	return c.JSON(http.StatusOK, requestResponse{Data: device})
 }
 
 func (h Handlers) DeleteDeviceByIdHandler(c echo.Context) error {
@@ -53,7 +53,7 @@ func (h Handlers) DeleteDeviceByIdHandler(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, requestResponse{Message: err.Error()})
 	}
 
-	return c.JSON(http.StatusCreated, requestResponse{Message: "device deleted successfully"})
+	return c.JSON(http.StatusOK, requestResponse{Message: "device deleted successfully"})
 }
 
 func (h Handlers) UpdateDeviceHandler(c echo.Context) error {
@@ -74,5 +74,5 @@ func (h Handlers) UpdateDeviceHandler(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, requestResponse{Message: err.Error()})
 	}
 
-	return c.JSON(http.StatusCreated, requestResponse{Message: "device updated successfully"})
+	return c.JSON(http.StatusOK, requestResponse{Message: "device updated successfully"})
 }
